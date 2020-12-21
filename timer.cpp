@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <iomanip>
+#include <fstream>
 
 
 using namespace std;
@@ -20,20 +21,35 @@ void write_time(int n){
 	}
 }
 
-void start_timer(void){
+void start_timer(int count){
 	write_time(52);
 	cout << "You have worked for 52 minutes. Rest time started!\n\n";
 	write_time(17);
 	cout << "Rest finished!\n";
+	ofstream log;
+	log.open("timer_log.txt", ios::trunc);
+	log << ++count;
 }
 
 int main(){
+	ifstream log;
+	int count = 0;
+	log.open("timer_log.txt");
+	if(!(log.is_open())){
+		cout << "Log file not found.\nCreating new one...\n";
+		log.close();
+		ofstream log;
+		log.open("timer_log.txt");
+	}
+	else{
+		log >> count;
+	}
 	char input;
-	cout << "This is the 52-17 timer!\n";
+	cout << "This is the 52-17 timer!\nYou have used this timer " << count << " times.\n";
 	while(true){
 		cout << "Enter 'y' to start timer and 'n' to exit.\n";
 		cin >> input;
-		if(input == 'y') start_timer();
+		if(input == 'y') start_timer(count);
 		else if(input == 'n'){
 			cout << "\033[1AProgram exiting...\n";
 			break;

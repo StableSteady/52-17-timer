@@ -10,8 +10,8 @@ void write_time(int n){
 	int seconds = 0;
 	int minutes = 0;
 	while(minutes < n){
-		cout << "\033[1A\033[2K";
-		cout << setfill('0') << setw(2) << minutes << ':' << setfill('0') << setw(2) << seconds << '\n';
+		cout << "\033[1A\033[2K";							//clear previous time and move cursor back to the start
+		cout << setfill('0') << setw(2) << minutes << ':' << setfill('0') << setw(2) << seconds << '\n'; //special xx : xx formatting
 		++seconds;
 		if(seconds == 60){
 			seconds = 0;
@@ -51,7 +51,7 @@ int main(){
 		cin >> input;
 		if(input == 'y') start_timer(count);
 		else if(input == 'n'){
-			cout << "\033[1AProgram exiting...\n";
+			cout << "Program exiting...\n";
 			break;
 		}
 	}
